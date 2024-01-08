@@ -1,0 +1,32 @@
+version: '3'
+services:
+  project1:
+    build:
+      context: ./Bazar
+    ports:
+      - "8001:8000"
+    networks:
+      - bazarNetwork
+
+  project2:
+    build:
+      context: ./FrontEnd
+    ports:
+      - "8002:8000"
+    networks:
+      - bazarNetwork
+    depends_on:
+      - project1
+      - project3
+
+  project3:
+    build:
+      context: ./OrderServer
+    ports:
+      - "8003:8000"
+    networks:
+      - bazarNetwork
+
+networks:
+  bazarNetwork:
+    driver: bridge
